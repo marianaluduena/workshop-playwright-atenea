@@ -1,0 +1,21 @@
+{
+  "name": "workshop-playwright-atenea",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marianaluduena/workshop-playwright-atenea.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/marianaluduena/workshop-playwright-atenea/issues"
+  },
+  "homepage": "https://github.com/marianaluduena/workshop-playwright-atenea#readme",
+  "description": "",
+  "devDependencies": {
+    "@playwright/test": "^1.54.1",
+    "@types/node": "^24.0.15"
+  }
+}
