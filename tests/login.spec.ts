@@ -1,23 +1,27 @@
 import { test, expect } from '@playwright/test';
+import { LoginPage } from '../pages/loginPage';
 
-test.only('Sucessful login', async ({ page }) => {
+let loginPage: LoginPage;
 
-  // Variable to create a random email each time this TC runs
+test("TC-004: Successful login", async ({ page }) => {
 
-  const randomEmail = "anna.anders"+  Math.floor(Math.random() * 1000) + "@fakemail.com";
+  loginPage = new LoginPage(page);
 
-  await page.goto('http://localhost:3000/signup');
+  // Go to Login page
+  await loginPage.visitLoginUrl();
 
-  await page.locator('[name="firstName"]').fill("Anna");
-  await page.locator('[name="lastName"]').fill("Andersen");
-  await page.locator('[name="email"]').fill(randomEmail);
-  await page.getByRole('textbox', { name: 'Contraseña' }).fill("anna123");
-  await page.getByTestId("boton-registrarse").click();
+  // Fill the form and click the btn
+  await loginPage.loginUser("ana-prince@fake.com", "ana123");
 
-  await expect(page.getByText("Registro exitoso!")).toBeVisible();
+  // Successful login message
 
-  await page.waitForTimeout(5000);
+  await expect(page.getByText(loginPage.successfulLoginMessage)).toBeVisible();
 
-});
+  // Confirm the user is in the dashboard page
 
+  await page.waitForURL("http://localhost:3000/dashboard");
+
+  await page.waitForTimeout(3000);
+
+})
 
