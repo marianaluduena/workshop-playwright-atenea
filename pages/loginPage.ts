@@ -9,6 +9,8 @@ export class LoginPage {
     readonly registerLink: Locator;
     readonly createAccountBtn: Locator;
     readonly successfulLoginMessage: string;
+    readonly invalidCredentialsMessage: string;
+    readonly dashboardTitle: string;
 
     constructor(page: Page) {
 
@@ -19,6 +21,8 @@ export class LoginPage {
         this.registerLink = page.getByTestId('link-registrarse-login');
         this.createAccountBtn = page.getByTestId('boton-signup-header'); 
         this.successfulLoginMessage = "Inicio de sesión exitoso";
+        this.invalidCredentialsMessage = "Invalid credentials";
+        this.dashboardTitle = "Tablero Principal";
     }
 
     // Actions
