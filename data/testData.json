@@ -1,0 +1,8 @@
+{
+    "validUser":{
+        "firstName": "Jazmin",
+        "lastName": "Schwann",
+        "email": "random@fakemail.com",
+        "password": "12345678"
+    }
+}
