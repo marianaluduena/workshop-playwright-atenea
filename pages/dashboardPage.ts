@@ -3,22 +3,22 @@ import { Page, Locator } from "@playwright/test";
 export class DashboardPage {
 
     readonly page: Page;
-    readonly createAccountBtn: Locator;
-    readonly plusBtn: Locator;
+    readonly addAccountBtn: Locator;
     readonly deleteBtn: Locator;
     readonly addFundsBtn: Locator;
     readonly sendBtn: Locator;
     readonly logOutBtn: Locator;
+    readonly mainTitle: Locator;
 
     constructor(page: Page) {
 
         this.page = page;
-        this.createAccountBtn = this.page.getByTestId('tarjeta-agregar-cuenta');
-        
-        /*this.deleteBtn = page.getByTestId('boton-eliminar-cuenta');
+        this.addAccountBtn = this.page.getByTestId('tarjeta-agregar-cuenta');
+        this.deleteBtn = page.getByTestId('boton-eliminar-cuenta');
         this.addFundsBtn = page.getByTestId('boton-agregar-fondos');
         this.sendBtn = page.getByTestId('boton-enviar');
-        this.logOutBtn = page.getByTestId('boton-logout');*/
+        this.logOutBtn = page.getByTestId('boton-logout');
+        this.mainTitle = page.getByTestId('titulo-dashboard');
     }
 
     // Actions
@@ -29,13 +29,6 @@ export class DashboardPage {
         await this.page.waitForLoadState("domcontentloaded");
 
     }
-
-    /*
-        async clickPlusBtn() {
-    
-            await this.createAccountBtn.click();
-    
-        } */
 
 
 }

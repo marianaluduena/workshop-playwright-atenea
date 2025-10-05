@@ -37,6 +37,8 @@ test("TC-004: Successful login", async ({ page }) => {
 
   await expect(page.getByText(loginPage.dashboardTitle)).toBeVisible();
 
+  await page.waitForTimeout(5000);
+
 })
 
 // Negative scenarios
