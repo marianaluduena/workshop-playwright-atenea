@@ -11,7 +11,7 @@ test.beforeEach(async ({ page }) => {
   // Go to Sign In page
   await registerPage.visitSignUpUrl();
 
-})
+});
 
 test('TC-001: Sucessful signup', async ({ page }) => {
 
@@ -41,7 +41,7 @@ test("TC-002: User already exists", async ({ page }) => {
 
   await page.waitForTimeout(3000);
 
-})
+});
 
 test("TC-003: Redirect user to the login page after sign in", async ({ page }) => {
 
@@ -58,7 +58,7 @@ test("TC-003: Redirect user to the login page after sign in", async ({ page }) =
 
   await page.waitForTimeout(3000);
 
-})
+});
 
 test("TC-004: Verify the user sign ups from the API", async ({ page, request }) => {
 
@@ -106,10 +106,107 @@ test("TC-004: Verify the user sign ups from the API", async ({ page, request }) 
   expect(responseBody.user).toEqual(expect.objectContaining({
 
     id: expect.any(String),
-    firstName: "Jazmín",
-    lastName: "Schwann",
+    firstName: TestData.validUser.firstName,
+    lastName: TestData.validUser.lastName,
     email: email,
 
 
   }))
-})
+});
+
+
+test("TC-005: Verify successful sign up and API's response", async ({ page, request }) => {
+
+  // First, the user must be created to triger the API response code (201 Created)
+  await test.step("Fill the sign up form", async () => {
+
+    const email = (TestData.validUser.email.split("@"))[0] + Math.floor(Math.random() * 1000) + "@" + (TestData.validUser.email.split("@"))[1];
+
+    await registerPage.fillSignUpForm(
+
+      TestData.validUser.firstName,
+      TestData.validUser.lastName,
+      email,
+      TestData.validUser.password
+
+    )
+
+    // Step 2: Intercept the API's response
+
+    // The ** means, it doesn't matter the environment as long as the endpoint is api/auth/signup
+
+    const apiResponseEndpoint = page.waitForResponse("**/api/auth/signup");
+
+    // Step 3: Click the Signup btn
+
+    await registerPage.clickSignUpBtn();
+
+    // Step 4: Wait for the API response
+
+    const response = await apiResponseEndpoint;
+
+    // Step 5: Catch the response body
+
+    const responseBody = await response.json();
+
+    // Assert the code status is 201
+    expect(response.status()).toBe(201);
+
+    // Confirm the response body has a token
+    expect(responseBody).toHaveProperty("token");
+
+    //Confirm the token is a string
+    expect(typeof responseBody.token).toBe("string");
+
+    // Confirm the reponse body has a user
+    expect(responseBody).toHaveProperty("user");
+
+    // Confirm the response body property "user" as an object
+
+    expect(responseBody.user).toEqual(expect.objectContaining({
+
+      id: expect.any(String),
+      firstName: TestData.validUser.firstName,
+      lastName: TestData.validUser.lastName,
+      email: email,
+
+    }))
+
+    // Step 7: Catch the assertion
+
+    await expect(page.getByText("Registro exitoso!")).toBeVisible();
+
+  })
+});
+
+test("TC-006: Email already exists in the API", async ({ page, request }) => {
+
+  const email = (TestData.validUser.email.split("@"))[0] + Math.floor(Math.random() * 1000) + "@" + (TestData.validUser.email.split("@"))[1];
+
+  // Catch the request's response (409)
+
+  await page.route("**/api/auth/signup", route => {
+
+    route.fulfill({
+
+      status: 409,
+      contentType: "application/json",
+      body: JSON.stringify({ message: "Email already in use" })
+
+    });
+  })
+
+  // Fill the Sign in form
+
+  await registerPage.registerUser (
+
+    TestData.validUser.firstName,
+    TestData.validUser.lastName,
+    email,
+    TestData.validUser.password
+
+  )
+  // Step : Catch the assertion
+
+    await expect(page.getByText("Email already in use")).toBeVisible();
+});
