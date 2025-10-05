@@ -2,10 +2,12 @@ import { test, expect } from '@playwright/test';
 import { LoginPage } from '../pages/loginPage';
 import { DashboardPage } from '../pages/dashboardPage';
 import { ModalCreateAccount } from '../pages/modalCreateAccount';
+import { ModalTransferMoney } from '../pages/modalTransferMoney';
 
 let loginPage: LoginPage;
 let dashboardPage: DashboardPage;
 let modalCreateAccount: ModalCreateAccount;
+let modalTransferMoney: ModalTransferMoney;
 
 // User's extensions to login with the session storage
 
@@ -26,6 +28,7 @@ test.beforeEach(async ({ page }) => {
   loginPage = new LoginPage(page);
   dashboardPage = new DashboardPage(page);
   modalCreateAccount = new ModalCreateAccount(page);
+  modalTransferMoney= new ModalTransferMoney(page);
 
   // Go to Login page
   //await loginPage.visitLoginUrl();
@@ -60,5 +63,8 @@ test("TC-005: Create an account", async ({ page }) => {
 userSends("TC-006: Verify the user can send money to an account", async({page}) =>{
 
   await expect(dashboardPage.mainTitle).toBeVisible(); 
+  await dashboardPage.sendBtn.click();
+  await modalTransferMoney.completeAndSendMoney("johnny-soy-rico@fake.com", "50");
+  await page.waitForTimeout(3000);
 
 });
