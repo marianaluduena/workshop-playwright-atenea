@@ -9,6 +9,7 @@ export class DashboardPage {
     readonly sendBtn: Locator;
     readonly logOutBtn: Locator;
     readonly mainTitle: Locator;
+    readonly selectAccount: Locator;
 
     constructor(page: Page) {
 
@@ -19,6 +20,7 @@ export class DashboardPage {
         this.sendBtn = page.getByTestId('boton-enviar');
         this.logOutBtn = page.getByTestId('boton-logout');
         this.mainTitle = page.getByTestId('titulo-dashboard');
+        this.selectAccount = page.getByRole('combobox', { name: 'Cuenta *' });
     }
 
     // Actions
