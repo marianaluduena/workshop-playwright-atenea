@@ -4,6 +4,7 @@ import { DashboardPage } from '../pages/dashboardPage';
 import { ModalCreateAccount } from '../pages/modalCreateAccount';
 import { ModalTransferMoney } from '../pages/modalTransferMoney';
 
+
 let loginPage: LoginPage;
 let dashboardPage: DashboardPage;
 let modalCreateAccount: ModalCreateAccount;
