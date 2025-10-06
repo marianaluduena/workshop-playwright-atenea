@@ -27,7 +27,7 @@ setup.beforeEach(async ({ page }) => {
 })
 
 // Login user that will send money
-
+/*
 setup("Login the user that will send money", async ({ page }) => {
 
     await loginPage.loginUser("rick-sin-tierra@fake.com", "123456");
@@ -43,7 +43,7 @@ setup("Login the user that will send money", async ({ page }) => {
     await page.context().storageState({ path: userSendsMoneyAuthFile });
     await page.waitForTimeout(5000);
 
-})
+})*/
 
 // Login the user that will receive money
 

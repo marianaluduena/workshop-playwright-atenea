@@ -28,11 +28,7 @@ export class ModalTransferMoney {
 
     // Actions
 
-    // 
-
     // Select account
-
-  
 
     async completeAndSendMoney(email: string, amount: string) {
 
