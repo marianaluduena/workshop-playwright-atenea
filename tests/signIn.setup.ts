@@ -31,8 +31,8 @@ setup.beforeEach(async ({ page }) => {
 setup("Login the user that will send money", async ({ page }) => {
 
     await loginPage.loginUser("rick-sin-tierra@fake.com", "123456");
-    //await dashboardPage.addAccountBtn.click();
-    //await modalCreateAccount.createAccount("Débito", "500");
+    await dashboardPage.addAccountBtn.click();
+    await modalCreateAccount.createAccount("Débito", "500");
 
 
     // Important: To capture the user's session, first the dashboard URL must be loaded 
