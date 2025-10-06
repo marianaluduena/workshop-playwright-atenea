@@ -28,7 +28,7 @@ test.beforeEach(async ({ page }) => {
   loginPage = new LoginPage(page);
   dashboardPage = new DashboardPage(page);
   modalCreateAccount = new ModalCreateAccount(page);
-  modalTransferMoney= new ModalTransferMoney(page);
+  modalTransferMoney = new ModalTransferMoney(page);
 
   // Go to Login page
   //await loginPage.visitLoginUrl();
@@ -44,8 +44,8 @@ test.beforeEach(async ({ page }) => {
 
 })
 
-/*
 
+/*
 test("TC-005: Create an account", async ({ page }) => {
 
   // Click the Plus btn
@@ -60,11 +60,19 @@ test("TC-005: Create an account", async ({ page }) => {
 })*/
 
 
-userSends("TC-006: Verify the user can send money to an account", async({page}) =>{
+userSends("TC-006: Verify the user can send money to an account", async ({ page }) => {
 
-  await expect(dashboardPage.mainTitle).toBeVisible(); 
+  await expect(dashboardPage.mainTitle).toBeVisible();
   await dashboardPage.sendBtn.click();
   await modalTransferMoney.completeAndSendMoney("johnny-soy-rico@fake.com", "50");
+  await expect(page.getByText(modalTransferMoney.successMessage)).toBeVisible();
   await page.waitForTimeout(3000);
 
 });
+
+userReceives("TC-007: Verify the user receives money", async ({ page }) => {
+
+  await expect(dashboardPage.mainTitle).toBeVisible();
+
+
+})
