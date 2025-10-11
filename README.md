@@ -1,0 +1,82 @@
+# Atenea Bank
+
+## Project overview
+
+- This is a QA automation project with **Playwright** from a course to demonstrate my skills as **QA Engineer.** The application this project is based on is **Atenea Bank**, a sandbox that emaulates an **banking application**
+
+- Link to the application's repository and set up (in spanish): https://github.com/Atenea-Conocimientos/redux-athena-bank 
+
+This repository contains:
+
+- Automated end-to-end tests using **Playwwright.**
+- Automation test cases for core application workflows.
+- Use cases with **positive, negative and edge scenarios.**
+- Exploratory testing findings.
+- Detailed bug reports with evidence.
+
+---------
+
+
+### Tools
+
+- **Playwright**
+
+- **TypeScript:** all the automated test cases are written with Typescript.
+
+- **Git**
+
+- **ChatGPT:** to create additional unexpected test scenarios, and as a guide to create specific test cases when I don't know how to do it.
+
+- **Loom:** to document visual proof / evidence. The screenshots links are available to be accessed.
+
+
+### Environment
+
+- **OS:** Windows 11
+
+-  **Browser:** Chrome Version 141.0.7390.67
+
+---------
+
+## Project Structure
+
+```
+WORKSHOP-PLAYWRIGHT-ATENEA/
+
+bugs/                          # Bugs found per feature
+│   ├── 
+│   ├── 
+│   └── 
+data/
+│   ├── testData.json           # User's data
+│ 
+docs/                           # Documentation files
+│   ├── bugs-found.md           # List of bugs found
+│   ├── exploratory-notes.md    # Exploratory testing notes   
+│   └── use-cases.md            # List of use cases
+|
+pages/                          # App's pages objects
+│    ├── dashboradPage.ts           
+│    ├── loginPage.ts  
+│    └── modalCreateAccount.ts    
+|    ├── modalTransferMoney.ts           
+│    ├── signUpPage.ts   
+|
+playwright\.auth                # Account's setup
+│         ├── userReceivesMoney.json           
+│         ├── userSendsMoney.json
+|
+tests/                           # Automated test suites (organized by feature)
+|    ├── auth.spec.ts         
+│    ├── signIn.setup.ts
+|    ├── signin.spec.ts 
+│    └── transactions.spec.ts
+|
+│── .gitignore                     # All untracked files 
+│ 
+├── package-lock.json              # Package lock file
+└── package.json                   # Project config
+├── README.md                      # Main project overview
+├── playwright.config.ts           # Playwright settings 
+
+```
