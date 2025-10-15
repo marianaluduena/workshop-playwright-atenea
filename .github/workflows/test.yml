@@ -59,7 +59,7 @@ jobs:
           cd app/frontend
           npm install
         env: 
-          VITE_API_URL: ${{env.VITE_API_URL}}
+          VITE_API_BASE: ${{env.VITE_API_URL}}
 
       - name: Wait for frontend
         run: wait-on http://locahost:3000
