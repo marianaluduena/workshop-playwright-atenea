@@ -64,4 +64,9 @@ jobs:
       - name: Wait for frontend
         run: wait-on http://locahost:3000
 
+      - name: Execute Playwright tests
+        run: |
+          cd app/frontend
+          npm run test
+      
 
