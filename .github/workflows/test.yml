@@ -29,14 +29,14 @@ jobs:
         uses: actions/checkout@v3  
 
       - name: Clone repository Athena Redux Bank
-        run: git clone git@github.com:Atenea-Conocimientos/redux-athena-bank.git 
+        run: git clone git@github.com:Atenea-Conocimientos/redux-athena-bank.git app
 
       - name: Create .env file in the backend directory
         run: |
-          echo "MONGO_URI=${{env.MONGO_URI}}" >> redux-athena-bank/backend/.env 
-          echo "JWT_SECRET=${{env.JWT_SECRET}}" >> redux-athena-bank/backend/.env
-          echo "PORT=${{env.PORT}}" >> redux-athena-bank/backend/.env
-          echo "VITE_API_URL=${{env.VITE_API_URL}}" >> redux-athena-bank/backend/.env
+          echo "MONGO_URI=${{env.MONGO_URI}}" >> app/backend/.env 
+          echo "JWT_SECRET=${{env.JWT_SECRET}}" >> app/backend/.env
+          echo "PORT=${{env.PORT}}" >> app/backend/.env
+          echo "VITE_API_URL=${{env.VITE_API_URL}}" >> app/backend/.env
 
       - name: Install backend dependencies
         run: |
