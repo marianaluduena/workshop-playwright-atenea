@@ -67,7 +67,7 @@ jobs:
           VITE_API_URL: ${{env.VITE_API_URL}}     
 
       - name: Wait for frontend
-        run: wait-on http://locahost:3000
+        run: wait-on http://localhost:3000
 
       - name: Run tests
         run: |
