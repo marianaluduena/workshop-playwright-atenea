@@ -69,6 +69,11 @@ jobs:
       - name: Wait for frontend
         run: wait-on http://locahost:3000
 
+      - name: Run tests
+        run: |
+          cd app/frontend
+          npm run test
+
   
       
 
