@@ -1,4 +1,4 @@
-import { Page, Locator} from "@playwright/test";
+import { Page, Locator } from "@playwright/test";
 
 export class LoginPage {
 
@@ -19,7 +19,7 @@ export class LoginPage {
         this.password = page.getByRole('textbox', { name: 'Contraseña' });
         this.loginBtn = page.getByTestId('boton-login');
         this.registerLink = page.getByTestId('link-registrarse-login');
-        this.createAccountBtn = page.getByTestId('boton-signup-header'); 
+        this.createAccountBtn = page.getByTestId('boton-signup-header');
         this.successfulLoginMessage = "Inicio de sesión exitoso";
         this.invalidCredentialsMessage = "Invalid credentials";
         this.dashboardTitle = "Tablero Principal";
