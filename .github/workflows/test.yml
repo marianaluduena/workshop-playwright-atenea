@@ -74,7 +74,7 @@ jobs:
           # install project dependencies so @playwright/test is available
           npm install
           # install browsers and required system dependencies for this distribution
-          npx playwright install --with-deps
+          npx playwright install -deps
           # run Playwright tests and generate HTML report
           npx playwright test --reporter=html
 
