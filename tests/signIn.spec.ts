@@ -1,5 +1,5 @@
 import { test, expect, request } from '@playwright/test';
-import { RegisterPage } from '../pages/RegisterPage.ts';
+import { RegisterPage } from '../pages/signUpPage';
 import TestData from '../data/testData.json';
 
 let registerPage: RegisterPage;

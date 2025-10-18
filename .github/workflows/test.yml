@@ -69,24 +69,24 @@ jobs:
       - name: Wait for frontend
         run: wait-on http://localhost:3000
 
-      - name: Install Playwright dependencies
-        run: |
-          sudo apt-get install -y libnss3 libatk-bridge2.0-0 libxss1 libgtk-3-0 libgbm-dev
-          sudo apt-get install -y libwoff1 libopus0 libwebp6 libwebp6 libwebpdemux6 
+      - name: Setup Playwright (system deps & browsers)
+        uses: microsoft/playwright-github-action@v1
+        with:
+          # install browsers and system dependencies
+          install-deps: true
 
-     # Istall and run Playwright tests
-     
-      - name: Install Playwright and run tests
+      - name: Install and run Playwright tests
         run: |
-          cd tests
+          # install dependencies from repo root so devDependencies are available
           npm install
-          npx playwright install-deps
+          # run tests; Playwright action already installed browsers
           npx playwright test --reporter=html
 
       - name: Save reports as artifacts
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: ./playwright-report
+          name: playwright-report
+          path: ./playwright-report
       
 
