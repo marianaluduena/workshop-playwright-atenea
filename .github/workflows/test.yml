@@ -69,17 +69,13 @@ jobs:
       - name: Wait for frontend
         run: wait-on http://localhost:3000
 
-      - name: Setup Playwright (system deps & browsers)
-        uses: microsoft/playwright-github-action@v1
-        with:
-          # install browsers and system dependencies
-          install-deps: true
-
-      - name: Install and run Playwright tests
+      - name: Install Playwright (browsers + system deps) and run tests
         run: |
-          # install dependencies from repo root so devDependencies are available
+          # install project dependencies so @playwright/test is available
           npm install
-          # run tests; Playwright action already installed browsers
+          # install browsers and required system dependencies for this distribution
+          npx playwright install --with-deps
+          # run Playwright tests and generate HTML report
           npx playwright test --reporter=html
 
       - name: Save reports as artifacts
