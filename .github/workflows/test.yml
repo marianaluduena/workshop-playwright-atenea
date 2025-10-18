@@ -71,7 +71,7 @@ jobs:
 
       - name: Install Playwright dependencies
         run: |
-          sudo apt-get install -y libnss3 libatk-bridge2.0-0 libxss1 libgtk-3-0 libgbm-dev libasound2
+          sudo apt-get install -y libnss3 libatk-bridge2.0-0 libxss1 libgtk-3-0 libgbm-dev
           sudo apt-get install -y libwoff1 libopus0 libwebp6 libwebp6 libwebpdemux6 
 
      # Istall and run Playwright tests
