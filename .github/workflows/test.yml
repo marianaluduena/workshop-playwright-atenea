@@ -69,8 +69,8 @@ jobs:
       - name: Wait for frontend
         run: wait-on http://localhost:3000
 
-      - name: Install and run tests (setup + chromium) 
-        run: 
+      - name: Install and run tests (setup + chromium)
+        run: |
           npm install
           npx playwright install --with-deps
           npx playwright test --reporter=html
