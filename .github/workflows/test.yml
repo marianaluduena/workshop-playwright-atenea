@@ -70,17 +70,14 @@ jobs:
         run: wait-on http://localhost:3000
 
       - name: Install Playwright (browsers + system deps) and run tests
-        run: |
-          # install project dependencies so @playwright/test is available
+        run: 
           npm install
-          # install browsers and required system dependencies for this distribution
           npx playwright install --with-deps
-          # run Playwright tests and generate HTML report
           npx playwright test --reporter=html
 
       - name: Save reports as artifacts
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v3
         with:
           name: playwright-report
           path: ./playwright-report
