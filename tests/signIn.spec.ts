@@ -60,6 +60,7 @@ test("TC-003: Redirect user to the login page after sign in", async ({ page }) =
 
 });
 
+
 test("TC-004: Verify the user sign ups from the API", async ({ page, request }) => {
 
   // The 1rst split [0] will get everything before the @, and the 2nd will get everything after the @
@@ -210,3 +211,28 @@ test("TC-006: Email already exists in the API", async ({ page, request }) => {
 
     await expect(page.getByText("Email already in use")).toBeVisible();
 });
+
+
+test("TC-007: Create sign up from the API", async ({ page, request }) => {
+
+  const email = (TestData.validUser.email.split("@"))[0] + Math.floor(Math.random() * 1000) + "@" + (TestData.validUser.email.split("@"))[1];
+  const endpoint = "http://localhost:6007/api/auth/signup";
+
+  const response = await request.post(endpoint, {
+
+    headers: {
+
+      "Accept": "application/vnd.api+json",
+      'Content-Type': "application/json",
+    },
+
+    data: {
+
+      firstName: TestData.validUser.firstName,
+      lastName: TestData.validUser.lastName,
+      email: email,
+      password: TestData.validUser.password
+    },
+  })
+
+})
