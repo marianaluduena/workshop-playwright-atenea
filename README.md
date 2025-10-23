@@ -8,7 +8,7 @@
 
 This repository contains:
 
-- Automated end-to-end tests using **Playwwright.**
+- Automated end-to-end tests using **Playwright.**
 - Automation test cases for core application workflows.
 - Use cases with **positive, negative and edge scenarios.**
 - Exploratory testing findings.
@@ -36,7 +36,7 @@ This repository contains:
 
 - **OS:** Windows 11
 
--  **Browser:** Chrome Version 141.0.7390.67
+-  **Browser:** Chrome Version 141.0.7390.109
 
 ---------
 
