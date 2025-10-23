@@ -2,7 +2,7 @@
 
 ## Project overview
 
-- This is a QA automation project with **Playwright** from a course to demonstrate my skills as **QA Engineer.** The application this project is based on is **Atenea Bank**, a sandbox that emaulates an **banking application**
+- This is a QA automation project with **Playwright** to demonstrate my skills as **QA Engineer.** The application this project is based on is **Atenea Bank**, a sandbox that emaulates an **banking application**. This project includes **CI/CD**.
 
 - Link to the application's repository and set up (in spanish): https://github.com/Atenea-Conocimientos/redux-athena-bank 
 
@@ -22,6 +22,8 @@ This repository contains:
 - **Playwright**
 
 - **TypeScript:** all the automated test cases are written with Typescript.
+
+- **GitHub Actions (CI/CD)**
 
 - **Git**
 
