@@ -13,28 +13,73 @@ jobs:
     runs-on: ubuntu-latest
 
     services:
-    image: mongo:6.0
-    ports:
-      - 27017:27017
+      mongo:
+        image: mongo:6.0
+        ports:
+          - 27017:27017
 
-  env: 
+    env: 
       MONGO_URI: ${{secrets.MONGO_URI}}   
       JWT_SECRET: ${{secrets.JWT_SECRET}}
       PORT: 6007
       VITE_API_URL: http://localhost:6007/api
 
-  
-  steps: // Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3  
 
-  -name: Checkout repository
-  uses: actions/checkout@v3  
+      - name: Clone repository Athena Redux Bank
+        run: git clone https://github.com/Atenea-Conocimientos/redux-athena-bank.git app
 
-  -name: Clone repository Athena Redux Bank
-  run: 
-     git clone git@github.com:Atenea-Conocimientos/redux-athena-bank.git 
+      - name: Create .env file in the backend directory
+        run: |
+          echo "MONGO_URI=${{env.MONGO_URI}}" >> app/backend/.env 
+          echo "JWT_SECRET=${{env.JWT_SECRET}}" >> app/backend/.env
+          echo "PORT=${{env.PORT}}" >> app/backend/.env
+          echo "VITE_API_URL=${{env.VITE_API_URL}}" >> app/backend/.env
 
--name: Create .env file in the backend directory
-run: echo "MONGO_URI=${{env.MONGO_URI}}" >> redux-athena-bank/backend/.env 
-run: echo "JWT_SECRET=${{env.JWT_SECRET}}" >> redux-athena-bank/backend/.env
-run: echo "PORT=${{env.PORT}}" >> redux-athena-bank/backend/.env
-run: echo "VITE_API_URL=${{env.VITE_API_URL}}" >> redux-athena-bank/backend/.env
+      - name: Install backend dependencies
+        run: |
+          cd app/backend
+          npm install
+
+      - name: Build backend
+        run: |
+          cd app/backend
+          npm run dev > backend.log 2>&1 &
+
+      - name: Install wait-on
+        run: npm install -g wait-on
+
+      - name: Wait for backend to be ready
+        run: wait-on tcp:6007 
+
+      - name: Install frontend dependencies
+        run: |
+          cd app/frontend
+          npm install
+
+      - name: Build frontend
+        run: |
+          cd app/frontend
+          npm run dev > frontend.log 2>&1 &   
+        env: 
+          VITE_API_URL: ${{env.VITE_API_URL}}     
+
+      - name: Wait for frontend
+        run: wait-on http://localhost:3000
+
+      - name: Install and run tests (setup + chromium)
+        run: |
+          npm install
+          npx playwright install --with-deps
+          npx playwright test --reporter=html
+
+      - name: Save reports as artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: ./playwright-report
+      
+

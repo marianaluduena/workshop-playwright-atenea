@@ -2,13 +2,13 @@
 
 ## Project overview
 
-- This is a QA automation project with **Playwright** from a course to demonstrate my skills as **QA Engineer.** The application this project is based on is **Atenea Bank**, a sandbox that emaulates an **banking application**
+- This is a QA automation project with **Playwright** to demonstrate my skills as **QA Engineer.** The application this project is based on is **Atenea Bank**, a sandbox that emaulates an **banking application**. This project includes **CI/CD**.
 
 - Link to the application's repository and set up (in spanish): https://github.com/Atenea-Conocimientos/redux-athena-bank 
 
 This repository contains:
 
-- Automated end-to-end tests using **Playwwright.**
+- Automated end-to-end tests using **Playwright.**
 - Automation test cases for core application workflows.
 - Use cases with **positive, negative and edge scenarios.**
 - Exploratory testing findings.
@@ -23,6 +23,8 @@ This repository contains:
 
 - **TypeScript:** all the automated test cases are written with Typescript.
 
+- **GitHub Actions (CI/CD)**
+
 - **Git**
 
 - **ChatGPT:** to create additional unexpected test scenarios, and as a guide to create specific test cases when I don't know how to do it.
@@ -34,7 +36,7 @@ This repository contains:
 
 - **OS:** Windows 11
 
--  **Browser:** Chrome Version 141.0.7390.67
+-  **Browser:** Chrome Version 141.0.7390.109
 
 ---------
 

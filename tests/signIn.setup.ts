@@ -1,4 +1,4 @@
-import { test as setup } from "@playwright/test";
+import { test as setup} from "@playwright/test";
 import { LoginPage } from "../pages/loginPage";
 import { DashboardPage } from "../pages/dashboardPage";
 import { ModalCreateAccount } from "../pages/modalCreateAccount";
@@ -15,6 +15,7 @@ let modalCreateAccount: ModalCreateAccount;
 
 const userSendsMoneyAuthFile = "playwright/.auth/userSendsMoney.json";
 const userReceivesMoneyAuthFile = "playwright/.auth/userReceivesMoney.json";
+
 
 setup.beforeEach(async ({ page }) => {
 
@@ -47,14 +48,26 @@ setup("Login the user that will send money", async ({ page }) => {
 
 // Login the user that will receive money
 
-setup("Login the user that will receive money", async ({ page }) => {
+setup("Create and login the user that will receive money", async ({ page, request: apiRequest }) => {
+
+
+    // Ensure the user exists via API to avoid UI flakiness on CI
+    await apiRequest.post('http://localhost:6007/api/auth/signup', {
+        headers: { 'Content-Type': 'application/json' },
+        data: {
+            firstName: 'Johnny',
+            lastName: 'Rico',
+            email: 'johnny-soy-rico@fake.com',
+            password: '123456'
+        }
+    }).catch(() => { /* ignore errors if user already exists */ });
 
     await loginPage.loginUser("johnny-soy-rico@fake.com", "123456");
-    await page.waitForURL("http://localhost:3000/dashboard");
+    await page.waitForURL("http://localhost:3000/dashboard", { timeout: 60000 });
 
     // Store user's session
 
     await page.context().storageState({path: userReceivesMoneyAuthFile });
-    await page.waitForTimeout(5000);
+    await page.waitForTimeout(2000);
 
 })

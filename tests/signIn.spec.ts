@@ -1,5 +1,5 @@
 import { test, expect, request } from '@playwright/test';
-import { RegisterPage } from '../pages/RegisterPage';
+import { RegisterPage } from '../pages/signUpPage';
 import TestData from '../data/testData.json';
 
 let registerPage: RegisterPage;
@@ -59,6 +59,7 @@ test("TC-003: Redirect user to the login page after sign in", async ({ page }) =
   await page.waitForTimeout(3000);
 
 });
+
 
 test("TC-004: Verify the user sign ups from the API", async ({ page, request }) => {
 
@@ -210,3 +211,28 @@ test("TC-006: Email already exists in the API", async ({ page, request }) => {
 
     await expect(page.getByText("Email already in use")).toBeVisible();
 });
+
+
+test("TC-007: Create sign up from the API", async ({ page, request }) => {
+
+  const email = (TestData.validUser.email.split("@"))[0] + Math.floor(Math.random() * 1000) + "@" + (TestData.validUser.email.split("@"))[1];
+  const endpoint = "http://localhost:6007/api/auth/signup";
+
+  const response = await request.post(endpoint, {
+
+    headers: {
+
+      "Accept": "application/vnd.api+json",
+      'Content-Type': "application/json",
+    },
+
+    data: {
+
+      firstName: TestData.validUser.firstName,
+      lastName: TestData.validUser.lastName,
+      email: email,
+      password: TestData.validUser.password
+    },
+  })
+
+})
