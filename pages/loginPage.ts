@@ -1,4 +1,4 @@
-import { Page, Locator } from "@playwright/test";
+import { Page, Locator, expect } from "@playwright/test";
 
 export class LoginPage {
 
@@ -49,5 +49,8 @@ export class LoginPage {
 
         await this.fillLoginForm(email, password);
         await this.clickLoginBtn();
+        await expect(this.page.getByText(this.successfulLoginMessage)).toBeVisible();
     }
+
+
 }
