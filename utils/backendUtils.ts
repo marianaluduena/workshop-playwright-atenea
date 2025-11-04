@@ -1,5 +1,5 @@
-import { Page, Locator, request, expect } from "@playwright/test";
-import { APIRequestContext } from "@playwright/test";
+import { Page, Locator, request} from "@playwright/test";
+import { APIRequestContext, expect } from "@playwright/test";
 
 export class BackendUtils {
 
@@ -8,27 +8,37 @@ export class BackendUtils {
     constructor(page: Page) {
         this.page = page;
     }
-/*
-    async sendSignUpRequest(endpoint: string, data: any) {
-        const apiRequestContext = await request.newContext();
+    /*
+        async sendSignUpRequest(endpoint: string, data: any) {
+            const apiRequestContext = await request.newContext();
+    
+            const response = await apiRequestContext.post(endpoint, {
+                headers: {
+                    "Accept": "application/vnd.github.v3+json",
+                    'Content-Type': "application/json",
+                },
+                data: data
+            });
+    
+            const responseBody = await response.json();
+    
+            await apiRequestContext.dispose();
+    
+            return { response, responseBody };
+        }*/
 
-        const response = await apiRequestContext.post(endpoint, {
-            headers: {
-                "Accept": "application/vnd.github.v3+json",
-                'Content-Type': "application/json",
-            },
-            data: data
-        });
+    static async createUserViaAPI(request: APIRequestContext, user: any, isNew: boolean = true) {
+        let email: string;
 
-        const responseBody = await response.json();
+        if (isNew) {
 
-        await apiRequestContext.dispose();
+            email = (user.email.split('@'))[0] + Math.floor(Math.random() * 1000) + '@' + user.email.split('@')[1];
+        }else{
 
-        return { response, responseBody };
-    }*/
+            email = user.email;
+        }
 
-     static async crearUsuarioPorAPI(request: APIRequestContext, user: any) {
-        const email = (user.email.split('@'))[0] + Math.floor(Math.random() * 1000) + '@' + user.email.split('@')[1];
+        //const email = (user.email.split('@'))[0] + Math.floor(Math.random() * 1000) + '@' + user.email.split('@')[1];
         const response = await request.post('http://localhost:6007/api/auth/signup', {
             headers: {
                 'Content-Type': 'application/json'
@@ -41,7 +51,7 @@ export class BackendUtils {
             }
         })
         expect(response.status()).toBe(201);
-        return { email: email, contrasena: user.contrasena }
+        return { email: email, password: user.password}
     }
 
 }
