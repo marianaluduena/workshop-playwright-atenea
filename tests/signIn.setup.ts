@@ -2,7 +2,6 @@ import { test as setup} from "@playwright/test";
 import { LoginPage } from "../pages/loginPage";
 import { DashboardPage } from "../pages/dashboardPage";
 import { ModalCreateAccount } from "../pages/modalCreateAccount";
-import { BackendUtils } from "../utils/backendUtils";
 
 // johnny-soy-rico@fake.com will receive money
 
