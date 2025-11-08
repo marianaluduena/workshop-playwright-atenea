@@ -49,7 +49,7 @@ setup("Create the user that will send money", async ({ page, request }) => {
     await page.waitForTimeout(5000);
 
 });
-/*
+
 setup("Login the user that will receive money", async ({ page, request: apiRequest }) => {
 
 
@@ -72,11 +72,11 @@ setup("Login the user that will receive money", async ({ page, request: apiReque
     await page.context().storageState({ path: userReceivesMoneyAuthFile });
     await page.waitForTimeout(2000);
 
-})*/
-
+})
+/*
 setup("Login the user that will receive money", async ({ page}) => {
 
     await loginPage.loginUser("userReceivesMoney@gmail.com", "123456");
     await page.context().storageState({path: userReceivesMoneyAuthFile});
 
-})
+})*/
