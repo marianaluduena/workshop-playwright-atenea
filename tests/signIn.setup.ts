@@ -1,7 +1,8 @@
-import { test as setup } from "@playwright/test";
+import { test as setup} from "@playwright/test";
 import { LoginPage } from "../pages/loginPage";
 import { DashboardPage } from "../pages/dashboardPage";
 import { ModalCreateAccount } from "../pages/modalCreateAccount";
+import { BackendUtils } from "../utils/backendUtils";
 
 // johnny-soy-rico@fake.com will receive money
 
@@ -60,7 +61,7 @@ setup("Create and login the user that will receive money", async ({ page, reques
             email: 'johnny-soy-rico@fake.com',
             password: '123456'
         }
-    }).catch(() => { });
+    }).catch(() => {  });
 
     await loginPage.loginUser("johnny-soy-rico@fake.com", "123456");
     await page.waitForURL("http://localhost:3000/dashboard", { timeout: 60000 });
