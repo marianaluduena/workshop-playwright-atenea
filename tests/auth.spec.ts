@@ -21,11 +21,11 @@ test.beforeEach(async ({ page }) => {
 
 })
 
-test("TC-004: Successful login", async ({ page }) => {
+test("TC-008: Successful login", async ({ page }) => {
 
 
   // Step 2: Fill the form and click the login btn
-  await loginPage.loginUser("ana-prince@fake.com", "ana123");
+  await loginPage.loginUserSuccessfully("ana-prince@fake.com", "ana123");
 
   // Step 3: Confirm the user is in the dashboard page
   await page.waitForURL("http://localhost:3000/dashboard");
@@ -43,10 +43,10 @@ test("TC-004: Successful login", async ({ page }) => {
 
 // Negative scenarios
 
-test("TC-005: Login with invalid credentials", async ({ page }) => {
+test("TC-009: Login with invalid credentials", async ({ page }) => {
 
   // Step 2: Fill the form with a valid email and an invalid password, then click the login btn
-  await loginPage.loginUser("ana-prince@fake.com", "ana");
+  await loginPage.loginAttemptWithInvalidCredentials("ana-prince@fake.com", "ana");
 
   // Step 3: Confirm the user remains in the login page
   await page.waitForURL("http://localhost:3000/login");
@@ -55,7 +55,7 @@ test("TC-005: Login with invalid credentials", async ({ page }) => {
   await expect(page.getByText(loginPage.invalidCredentialsMessage)).toBeVisible();
 })
 
-test("TC-006: Login without credentials", async ({ page }) => {
+test("TC-010: Login without credentials", async ({ page }) => {
 
   // Step 2: Leave the fields empty and click the login btn
   await loginPage.loginBtn.click();

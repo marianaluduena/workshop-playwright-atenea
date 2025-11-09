@@ -1,8 +1,10 @@
 import { test, expect, request } from '@playwright/test';
 import { RegisterPage } from '../pages/signUpPage';
 import TestData from '../data/testData.json';
+import { BackendUtils } from '../utils/backendUtils';
 
 let registerPage: RegisterPage;
+let backendUtils: BackendUtils;
 
 test.beforeEach(async ({ page }) => {
 
@@ -66,11 +68,11 @@ test("TC-004: Verify the user sign ups from the API", async ({ page, request }) 
   // The 1rst split [0] will get everything before the @, and the 2nd will get everything after the @
 
   const email = (TestData.validUser.email.split("@"))[0] + Math.floor(Math.random() * 1000) + "@" + (TestData.validUser.email.split("@"))[1];
-
+  
   const response = await request.post("http://localhost:6007/api/auth/signup", {
 
     headers: {
-
+      "Accept": "application/vnd.github.v3+json",
       'Content-Type': "application/json",
     },
 
@@ -199,7 +201,7 @@ test("TC-006: Email already exists in the API", async ({ page, request }) => {
 
   // Fill the Sign in form
 
-  await registerPage.registerUser (
+  await registerPage.registerUser(
 
     TestData.validUser.firstName,
     TestData.validUser.lastName,
@@ -209,7 +211,7 @@ test("TC-006: Email already exists in the API", async ({ page, request }) => {
   )
   // Step : Catch the assertion
 
-    await expect(page.getByText("Email already in use")).toBeVisible();
+  await expect(page.getByText("Email already in use")).toBeVisible();
 });
 
 
