@@ -61,7 +61,7 @@ test("TC-005: Create an account", async ({ page }) => {
 })*/
 
 
-userSends("TC-006: Verify the user can send money to an account", async ({ page }) => {
+userSends("TC-011: Verify the user can send money to an account", async ({ page }) => {
 
   await expect(dashboardPage.mainTitle).toBeVisible();
   await dashboardPage.sendBtn.click();
@@ -71,7 +71,7 @@ userSends("TC-006: Verify the user can send money to an account", async ({ page 
 
 });
 
-userReceives("TC-007: Verify the user receives money", async ({ page }) => {
+userReceives("TC-012: Verify the user receives money", async ({ page }) => {
 
   await expect(dashboardPage.mainTitle).toBeVisible();
 
