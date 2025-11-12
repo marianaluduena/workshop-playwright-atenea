@@ -21,7 +21,7 @@ test.beforeEach(async ({ page }) => {
 
 })
 
-test("TC-008: Successful login", async ({ page }) => {
+test("TC-009: Successful login", async ({ page }) => {
 
 
   // Step 2: Fill the form and click the login btn
@@ -43,7 +43,7 @@ test("TC-008: Successful login", async ({ page }) => {
 
 // Negative scenarios
 
-test("TC-009: Login with invalid credentials", async ({ page }) => {
+test("TC-010: Login with invalid credentials", async ({ page }) => {
 
   // Step 2: Fill the form with a valid email and an invalid password, then click the login btn
   await loginPage.loginAttemptWithInvalidCredentials("ana-prince@fake.com", "ana");
@@ -55,7 +55,7 @@ test("TC-009: Login with invalid credentials", async ({ page }) => {
   await expect(page.getByText(loginPage.invalidCredentialsMessage)).toBeVisible();
 })
 
-test("TC-010: Login without credentials", async ({ page }) => {
+test("TC-011: Login without credentials", async ({ page }) => {
 
   // Step 2: Leave the fields empty and click the login btn
   await loginPage.loginBtn.click();
