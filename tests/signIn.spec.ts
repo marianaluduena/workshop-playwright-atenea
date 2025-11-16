@@ -218,6 +218,7 @@ test("TC-006: Email already exists in the API", async ({ page, request }) => {
 test("TC-007: Create sign up from the API", async ({ page, request }) => {
 
   const email = (TestData.validUser.email.split("@"))[0] + Math.floor(Math.random() * 1000) + "@" + (TestData.validUser.email.split("@"))[1];
+  //const backenResponse = await backendUtils.sendSignUpRequest("http://localhost:6007/api/auth/signup");
   const endpoint = "http://localhost:6007/api/auth/signup";
 
   const response = await request.post(endpoint, {
