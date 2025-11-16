@@ -1,10 +1,12 @@
 import { test, expect } from '@playwright/test';
 import { LoginPage } from '../pages/loginPage';
+import { DashboardPage } from '../pages/dashboardPage';
 import { beforeEach } from 'node:test';
+import TestData from '../data/testData.json';
 
 
 let loginPage: LoginPage;
-
+let dashboardPage: DashboardPage;
 // Login happy path scenarios test suite
 
 
@@ -15,6 +17,7 @@ let loginPage: LoginPage;
 test.beforeEach(async ({ page }) => {
 
   loginPage = new LoginPage(page);
+  dashboardPage = new DashboardPage(page);
 
   // Step 1: Go to Login page
   await loginPage.visitLoginUrl();
@@ -69,3 +72,51 @@ test("TC-011: Login without credentials", async ({ page }) => {
   await page.waitForURL("http://localhost:3000/login");
 
 })
+
+test("TC-012: Login new user created via API", async ({ page, request }) => {
+
+  const email = (TestData.validUser.email.split("@"))[0] + Math.floor(Math.random() * 1000) + "@" + (TestData.validUser.email.split("@"))[1];
+  const response = await request.post("http://localhost:6007/api/auth/signup", {
+
+    headers: {
+
+      "Accept": "application/vnd.api+json",
+      'Content-Type': "application/json",
+    },
+
+    data: {
+
+      firstName: TestData.validUser.firstName,
+      lastName: TestData.validUser.lastName,
+      email: email,
+      password: TestData.validUser.password
+    }
+
+  })
+
+  const responseBody = await response.json();
+  expect(response.status()).toBe(201);
+
+  const responsePromiseLogin = page.waitForResponse("http://localhost:6007/api/auth/login");
+  await loginPage.loginUserSuccessfully(email, TestData.validUser.password);
+
+  const responseLogin = await responsePromiseLogin;
+  const responseBodyLogin = await responseLogin.json();
+
+
+  expect(responseLogin.status()).toBe(200);
+  expect(responseBodyLogin).toHaveProperty("token");
+  expect(typeof responseBodyLogin.token).toBe("string");
+  expect(responseBodyLogin).toHaveProperty("user");
+  expect(responseBodyLogin.user).toEqual(expect.objectContaining({
+
+    id: expect.any(String),
+    firstName: TestData.validUser.firstName,
+    lastName: TestData.validUser.lastName,
+    email: email,
+  }));
+
+
+  await expect(dashboardPage.mainTitle).toBeVisible();
+
+});
