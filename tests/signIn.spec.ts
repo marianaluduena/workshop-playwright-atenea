@@ -1,8 +1,10 @@
 import { test, expect, request } from '@playwright/test';
 import { RegisterPage } from '../pages/signUpPage';
 import TestData from '../data/testData.json';
+import { BackendUtils } from '../utils/backendUtils';
 
 let registerPage: RegisterPage;
+let backendUtils: BackendUtils;
 
 test.beforeEach(async ({ page }) => {
 
@@ -66,7 +68,7 @@ test("TC-004: Verify the user sign ups from the API", async ({ page, request }) 
   // The 1rst split [0] will get everything before the @, and the 2nd will get everything after the @
 
   const email = (TestData.validUser.email.split("@"))[0] + Math.floor(Math.random() * 1000) + "@" + (TestData.validUser.email.split("@"))[1];
-
+  
   const response = await request.post("http://localhost:6007/api/auth/signup", {
 
     headers: {
@@ -209,13 +211,14 @@ test("TC-006: Email already exists in the API", async ({ page, request }) => {
   )
   // Step : Catch the assertion
 
-    await expect(page.getByText("Email already in use")).toBeVisible();
+    await expect(page.getByText("Email already in u")).toBeVisible();
 });
 
 
 test("TC-007: Create sign up from the API", async ({ page, request }) => {
 
   const email = (TestData.validUser.email.split("@"))[0] + Math.floor(Math.random() * 1000) + "@" + (TestData.validUser.email.split("@"))[1];
+  //const backenResponse = await backendUtils.sendSignUpRequest("http://localhost:6007/api/auth/signup");
   const endpoint = "http://localhost:6007/api/auth/signup";
 
   const response = await request.post(endpoint, {
@@ -235,4 +238,41 @@ test("TC-007: Create sign up from the API", async ({ page, request }) => {
     },
   })
 
+  
+
 })
+
+test("TC-008: Simulate server error (500) on signup and verify frontend reaction", async ({ page }) => {
+
+  const email = (TestData.validUser.email.split("@"))[0] + Math.floor(Math.random() * 1000) + "@" + (TestData.validUser.email.split("@"))[1];
+
+  // Intercept the signup POST and return a 500 error
+  await page.route("**/api/auth/signup", async route => {
+    await route.fulfill({
+      status: 500,
+      contentType: 'application/json',
+      body: JSON.stringify({ message: 'Internal Server Error' })
+    });
+  });
+
+  // Fill the signup form
+  await registerPage.fillSignUpForm(
+    TestData.validUser.firstName,
+    TestData.validUser.lastName,
+    email,
+    TestData.validUser.password
+  );
+
+  // Click sign up and wait for the intercepted response
+  const [response] = await Promise.all([
+    page.waitForResponse('**/api/auth/signup'),
+    registerPage.clickSignUpBtn()
+  ]);
+
+  // Assert we got the mocked 500 response
+  expect(response.status()).toBe(500);
+
+  // The UI should not show the successful signup message
+  await expect(page.getByText(registerPage.successfulSignUpMessage)).toHaveCount(0);
+
+});

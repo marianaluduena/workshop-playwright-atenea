@@ -45,10 +45,9 @@ This repository contains:
 ```
 WORKSHOP-PLAYWRIGHT-ATENEA/
 
-bugs/                          # Bugs found per feature
-│   ├── 
-│   ├── 
-│   └── 
+.github/.workflows              # Workflows / Pipeline
+│   ├── test.yml
+|
 data/
 │   ├── testData.json           # User's data
 │ 
@@ -73,6 +72,8 @@ tests/                           # Automated test suites (organized by feature)
 │    ├── signIn.setup.ts
 |    ├── signin.spec.ts 
 │    └── transactions.spec.ts
+utils/                           # 
+|    ├──backendUtils
 |
 │── .gitignore                     # All untracked files 
 │ 

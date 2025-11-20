@@ -1,4 +1,4 @@
-import { Page, Locator } from "@playwright/test";
+import { Page, Locator, expect } from "@playwright/test";
 
 export class LoginPage {
 
@@ -45,9 +45,18 @@ export class LoginPage {
         await this.loginBtn.click();
     }
 
-    async loginUser(email: string, password: string) {
+    async loginUserSuccessfully(email: string, password: string) {
 
         await this.fillLoginForm(email, password);
         await this.clickLoginBtn();
+        await expect(this.page.getByText(this.successfulLoginMessage)).toBeVisible();
     }
+
+async loginAttemptWithInvalidCredentials(email: string, password: string) {
+
+        await this.fillLoginForm(email, password);
+        await this.clickLoginBtn();
+        await expect(this.page.getByText(this.invalidCredentialsMessage)).toBeVisible();
+    }
+
 }
