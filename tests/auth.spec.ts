@@ -3,6 +3,7 @@ import { LoginPage } from '../pages/loginPage';
 import { DashboardPage } from '../pages/dashboardPage';
 import { beforeEach } from 'node:test';
 import TestData from '../data/testData.json';
+import { BackendUtils } from '../utils/backendUtils';
 
 
 let loginPage: LoginPage;
@@ -73,6 +74,7 @@ test("TC-011: Login without credentials", async ({ page }) => {
 
 })
 
+/*
 test("TC-012: Login new user created via API", async ({ page, request }) => {
 
   const email = (TestData.validUser.email.split("@"))[0] + Math.floor(Math.random() * 1000) + "@" + (TestData.validUser.email.split("@"))[1];
@@ -114,6 +116,35 @@ test("TC-012: Login new user created via API", async ({ page, request }) => {
     firstName: TestData.validUser.firstName,
     lastName: TestData.validUser.lastName,
     email: email,
+  }));
+
+
+  await expect(dashboardPage.mainTitle).toBeVisible();
+
+});*/
+
+test("TC-012: Login new user created via API", async ({ page, request }) => {
+
+  const newUser = await BackendUtils.createUserViaAPI(request, TestData.validUser); 
+
+
+  const responsePromiseLogin = page.waitForResponse("http://localhost:6007/api/auth/login");
+  await loginPage.loginUserSuccessfully(newUser.email, newUser.password);
+
+  const responseLogin = await responsePromiseLogin;
+  const responseBodyLogin = await responseLogin.json();
+
+
+  expect(responseLogin.status()).toBe(200);
+  expect(responseBodyLogin).toHaveProperty("token");
+  expect(typeof responseBodyLogin.token).toBe("string");
+  expect(responseBodyLogin).toHaveProperty("user");
+  expect(responseBodyLogin.user).toEqual(expect.objectContaining({
+
+    id: expect.any(String),
+    firstName: TestData.validUser.firstName,
+    lastName: TestData.validUser.lastName,
+    email: newUser.email,
   }));
 
 
