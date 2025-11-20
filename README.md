@@ -2,9 +2,13 @@
 
 ## Project overview
 
-- This is a QA automation project with **Playwright** to demonstrate my skills as **QA Engineer.** The application this project is based on is **Atenea Bank**, a sandbox that emaulates an **banking application**. This project includes **CI/CD**.
+- This is a QA automation project with **Playwright with TypeScript**. The application this project is based on is **Atenea Bank**, a sandbox that emaulates an **banking application**. This project includes **CI/CD**.
+  
+- The tests cover **Frontend** and **Backend.** 
 
-- Link to the application's repository and set up (in spanish): https://github.com/Atenea-Conocimientos/redux-athena-bank 
+- **Link to the application's repository and set up (in spanish): https://github.com/Atenea-Conocimientos/redux-athena-bank.**
+  
+- ⚠️ Please note that **this project is still in progress but functional.**
 
 This repository contains:
 
@@ -27,7 +31,7 @@ This repository contains:
 
 - **Git**
 
-- **ChatGPT:** to create additional unexpected test scenarios, and as a guide to create specific test cases when I don't know how to do it.
+- **ChatGPT and Gemini Copilot:** to create additional unexpected test scenarios, and as a guide to create specific test cases when I don't know how to do it.
 
 - **Loom:** to document visual proof / evidence. The screenshots links are available to be accessed.
 
@@ -72,8 +76,8 @@ tests/                           # Automated test suites (organized by feature)
 │    ├── signIn.setup.ts
 |    ├── signin.spec.ts 
 │    └── transactions.spec.ts
-utils/                           # 
-|    ├──backendUtils
+utils/                            
+|    ├──backendUtils.ts          # Method to create user via API     
 |
 │── .gitignore                     # All untracked files 
 │ 
