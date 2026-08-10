@@ -7,8 +7,6 @@
 - The tests cover **Frontend** and **Backend.** 
 
 - **Link to the application's repository and set up (in spanish): https://github.com/Atenea-Conocimientos/redux-athena-bank.**
-  
-- ⚠️ Please note that **this project is still in progress but functional.**
 
 This repository contains:
 
